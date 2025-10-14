@@ -1,215 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Professional Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+C4jK2dJ4A4y0p3Dq+K3V4t7gK5cK5k4lK2V9" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Chriswell Peyara - Full-Stack Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#1053D2', // Deep, professional blue
+                        'secondary-gray': '#4B5563', // Dark text color
+                        'background-light': '#F9FAFB', // Light gray background for contrast
+                        'accent-dark': '#1F2937', // Darker shades for text/headers
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '30': '7.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: theme('colors.secondary-gray');
+            background-color: theme('colors.white');
+        }
+        .skip-link:focus {
+            top: 0;
+            left: 0;
+        }
+        
+        /* Slideshow Container Styling */
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensures it stays behind the content */
+            overflow: hidden;
+        }
+
+        .slide-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 2s ease-in-out; /* Cross-fade transition */
+            background-size: cover;
+            background-position: center;
+            /* Apply a dark overlay for text visibility */
+            background-blend-mode: multiply;
+            background-color: rgba(31, 41, 55, 0.4); /* Dark overlay matching accent-dark (0.4 opacity) */
+        }
+
+        .slide-image.active {
+            opacity: 1;
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link absolute -top-10 left-0 bg-primary-blue text-white p-3 z-[9999] focus:top-0 transition-all duration-300">Skip to main content</a>
 
-    <header class="site-header">
-        <div class="wrapper nav-wrapper">
-            <h1 class="logo"><a href="#hero">CHRISWELL PEYARA</a></h1>
-            <nav class="main-nav" aria-label="Main Portfolio Navigation">
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
+    <header class="sticky top-0 z-50 bg-white shadow-md/50 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold text-accent-dark tracking-tight">
+                <a href="#hero" class="text-primary-blue hover:text-blue-700 transition duration-300">CHRISWELL PEYARA</a>
+            </h1>
+            <nav class="hidden md:block" aria-label="Main Portfolio Navigation">
+                <ul class="flex space-x-8">
+                    <li><a href="#about" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
+                    <li><a href="#skills" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Skills<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
+                    <li><a href="#projects" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Projects<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
                 </ul>
             </nav>
+            <button class="md:hidden text-gray-700 hover:text-primary-blue focus:outline-none" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </div>
     </header>
 
     <main id="main-content">
 
-        <section id="hero" class="hero section">
-            <div class="wrapper hero-content">
-                <p class="greeting">Hello, my name is</p>
-                <h2 class="name-title">Chriswell Peyara</h2>
-                <h3 class="role-title">I build robust and accessible web applications.</h3>
-                <p class="bio-summary">
-                    I'm a Full-Stack Developer with a passion for clean code, responsive design, and modern technologies like modularity and use of functions.
+        <section id="hero" class="relative min-h-[80vh] flex items-center text-center py-20">
+            
+            <div class="slideshow-container">
+                <div class="slide-image active" style="background-image: url('./assets/hero-bg-1.jpg');"></div>
+                <div class="slide-image" style="background-image: url('./assets/hero-bg-2.jpg');"></div>
+                <div class="slide-image" style="background-image: url('./assets/hero-bg-3.jpg');"></div>
+                <div class="slide-image" style="background-image: url('./assets/hero-bg-4.jpg');"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <p class="text-lg text-white font-semibold uppercase tracking-wider mb-2 animate-fadeInDown">Hello, my name is</p>
+                <h2 class="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-white mb-3 leading-tight">Chriswell Peyara</h2>
+                <h3 class="text-2xl sm:text-3xl font-light text-primary-blue mb-8 text-shadow-lg">I build robust and accessible web applications.</h3>
+                <p class="text-xl text-white mb-12 max-w-2xl mx-auto">
+                    A Full-Stack Developer with a passion for clean code, responsive design, and modern technologies.
                 </p>
-                <a href="#projects" class="button primary-button">View My Work</a>
+                <a href="#projects" class="inline-block px-8 py-3 text-lg font-bold bg-primary-blue text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">View My Work <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+        </section>
+        
+        <section id="about" class="bg-background-light py-20 lg:py-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">About Me</h2>
+                
+                <div class="grid md:grid-cols-3 gap-12 items-center">
+                    <div class="md:col-span-1 flex justify-center order-2 md:order-1">
+                        <img src="./assets/CHRIS.jpg" alt="A professional photo of Chriswell Peyara" class="w-64 h-64 object-cover rounded-full border-4 border-primary-blue shadow-xl transform hover:scale-105 transition duration-500">
+                    </div>
+                    
+                    <div class="md:col-span-2 order-1 md:order-2">
+                        <p class="text-lg mb-6 leading-relaxed text-gray-700">
+                            As a result-oriented and self-motivated software engineer, I have 1 year of experience in developing scalable and efficient applications. I have successfully delivered several systems, including payroll management and various IoT-based systems like a tobacco curing system and a BMI calculator.
+                        </p>
+                        <p class="text-lg mb-8 leading-relaxed text-gray-700">
+                            I thrive on constantly learning about upcoming technologies and applying modularity and functional programming principles to my work. I am currently seeking Full-time roles and Freelance projects where I can contribute my passion for modern development.
+                        </p>
+                        <a href="./assets/CHRISWELL PEYARA IT GRADUATE TRAINEE CV.pdf" class="inline-block px-6 py-3 text-base font-semibold text-primary-blue border-2 border-primary-blue rounded-lg hover:bg-primary-blue hover:text-white transition duration-300" download aria-label="Download Chriswell Peyara's resume as a PDF file">
+                            <i class="fas fa-download mr-2"></i> Download CV
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="about" class="about section alternate-bg">
-            <div class="wrapper about-grid">
-                <h2 class="section-title">About Me</h2>
-                <div class="about-text">
-                    <p>
-                        As a result oriented and self motivated software engineer with
-                        1 year of experience in developing scalable and efficient
-                        applications . I developed a number of system including payroll
-                        systems and IoT based systems and managed to deliver them
-                        in time which are tobacco curing system and BMI calculator just
-                        to mention a few </p>
-                    <p>
-                        In my free time, I enjoy playing video games, and constantly learning about up coming technologies. I'm currently seeking Full-time roles/Freelance projects.
-                    </p>
-                    <a href="./assets/CHRISWELL PEYARA IT GRADUATE TRAINEE CV.pdf" class="button secondary-button" download aria-label="Download your resume as a PDF file">Download CV</a>
-                </div>
-                <div class="profile-image">
-                    <img src="./assets/CHRIS.jpg" alt="A professional photo of Chriswell Peyara">
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="skills section">
-            <div class="wrapper">
-                <h2 class="section-title">Technical Skills</h2>
-                <ul class="skills-list">
-                    <li class="skill-item">HTML5 & CSS3 <i class="fab fa-html5"></i></li>
-                    <li class="skill-item">JavaScript (ES6+) <i class="fab fa-js"></i></li>
-                    <li class="skill-item">React / Next.js <i class="fab fa-react"></i></li>
-                    <li class="skill-item">Node.js / Express <i class="fab fa-node-js"></i></li>
-                    <li class="skill-item">SQL / NoSQL (PostgreSQL, MongoDB) <i class="fas fa-database"></i></li>
-                    <li class="skill-item">Git / GitHub <i class="fab fa-github"></i></li>
-                    <li class="skill-item">Responsive Design / Flexbox / Grid <i class="fas fa-mobile-alt"></i></li>
-                    <li class="skill-item">Accessibility (WCAG) <i class="fas fa-universal-access"></i></li>
-                    <li class="skill-item">Java <i class="fas fa-mobile-alt"></i></li>
-                    <li class="skill-item">VB.net <i class="fas fa-universal-access"></i></li>
-                    <li class="skill-item">Android Studio <i class="fas fa-mobile-alt"></i></li>
-                    <li class="skill-item">Mars (assemply language)<i class="fas fa-universal-access"></i></li>
-
+        <section id="skills" class="py-20 lg:py-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">Technical Skills</h2>
+                <ul class="flex flex-wrap justify-center gap-4 sm:gap-6 list-none p-0">
+                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">HTML5 & CSS3 <i class="fab fa-html5 ml-2"></i></li>
+                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">JavaScript (ES6+) <i class="fab fa-js ml-2"></i></li>
+                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">React / Next.js <i class="fab fa-react ml-2"></i></li>
+                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">Responsive Design <i class="fas fa-mobile-alt ml-2"></i></li>
+                    
+                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">Node.js / Express <i class="fab fa-node-js ml-2"></i></li>
+                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">SQL / NoSQL (PostgreSQL, MongoDB) <i class="fas fa-database ml-2"></i></li>
+                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">Java <i class="fab fa-java ml-2"></i></li>
+                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">VB.net</li>
+                    
+                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Git / GitHub <i class="fab fa-github ml-2"></i></li>
+                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Android Studio <i class="fab fa-android ml-2"></i></li>
+                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">IoT Development <i class="fas fa-microchip ml-2"></i></li>
+                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Accessibility (WCAG) <i class="fas fa-universal-access ml-2"></i></li>
                 </ul>
             </div>
         </section>
 
-        <section id="projects" class="projects section alternate-bg">
-            <div class="wrapper">
-                <h2 class="section-title">Featured Projects</h2>
-                <div class="projects-grid">
-                    <article class="project-card">
-                        <img src="./assets/hotel.png" alt="Screenshot of Project One's user interface">
-                        <h3>Project One: Hotel Booking System</h3>
-                        <p class="project-description">The clients could book rooms online and only rooms available will be displayed and occupied can not be displayed. On this project was the developer. </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#VB.NET</li>
-                            <li>#SQL</li>
-                            <li>#API</li>
-                        </ul>
-                    </article>
-                    <article class="project-card">
-                        <img src="./assets/payroll.png" alt="Screenshot of Project One's user interface">
-                        <h3>Project Two: Payroll Management System</h3>
-                        <p class="project-description">The system could allow employees to be registered or signed in into the system then when they come to work they will sign in using fingerprint and then sign out again when they are going home. The time they worked a day will be calculated upon the time loged in and out. Also performance and bonuses will be worked automatically using the system. I was the developer of the system.   </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#Java</li>
-                            <li>#SQL</li>
-                            <li>#API</li>
-                        </ul>
-                    </article>
-
-                    <article class="project-card">
-                        <img src="./assets/dinning.jpg" alt="Screenshot of Project Two's user interface">
-                        <h3>Project Three: BUSE Dinning management system</h3>
-                        <p class="project-description">The system could allow students to order there food from the dinning and also the system allowed the catering team to upload types of meals available and students will order those meals only. I was the developer together with my friend.</p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#HTML5</li>
-                            <li>#CSS</li>
-                            <li>#JAVASCRIPTY</li>
-                        </ul>
-                    </article>
-
-
-
-
-
-                    <article class="project-card">
-                        <img src="./assets/ATCS.jpg" alt="Screenshot of Project One's user interface">
-                        <h3>Project Four: Automated Tobacco Curing System Using IoT Devices</h3>
-                        <p class="project-description">The system used IoT devices like temperature and Humidity sensors, heaters, actuators and Android APK to control the conditions of a tobacco curing burn. I was the developer. </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#Java</li>
-                            <li>#SQL</li>
-                            <li>#Android Studio</li>
-                        </ul>
-                    </article>
-
-
-
-                    <article class="project-card">
-                        <img src="./assets/BMI.jpg" alt="Screenshot of Project One's user interface">
-                        <h3>Project Five: BMI Calculator Using IoT Devices</h3>
-                        <p class="project-description">The system used IoT devices like load cells, Ultrasonic sensor, amplifiers, actuators(arduino) and Android APK to take the height and weight of a person, These values used to calculate the bmi, bodyfat and other things. I was the developer. </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#Java</li>
-                            <li>#SQL</li>
-                            <li>#Android Studio</li>
-                        </ul>
-                    </article>
-
-
-
-                    <article class="project-card">
-                        <img src="./assets/stocktake.png" alt="Screenshot of Project One's user interface">
-                        <h3>Project Six: Stocktake Management System</h3>
-                        <p class="project-description">The system manages stock and its has a Point Of Sale function, and once the stock is about to be fineshed the system will inform the suppliers to bring stock automatically. I was the developer </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">Live Demo</a>
-                            <a href="#" target="_blank" class="project-link" rel="noopener noreferrer">GitHub Repo</a>
-                        </div>
-                        <ul class="project-tech">
-                            <li>#VB.NET</li>
-                            <li>#SQL</li>
-                            
-                        </ul>
-                    </article>
-
-
+        <section id="projects" class="bg-background-light py-20 lg:py-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">Featured Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/hotel.png" alt="Screenshot of Hotel Booking System" class="w-full h-48 object-cover object-top border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">Hotel Booking System</h3>
+                            <p class="text-gray-600 mb-4 text-sm">A comprehensive online system allowing clients to view and book only currently available rooms, ensuring an efficient reservation process.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">VB.NET</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">API Integration</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
 
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/payroll.png" alt="Screenshot of Payroll Management System" class="w-full h-48 object-cover object-top border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">Payroll Management System</h3>
+                            <p class="text-gray-600 mb-4 text-sm">Automated system managing employee registration, fingerprint-based sign-in/out, time calculation, and automatic performance/bonus computation.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">Biometric Integration</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
 
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/dinning.jpg" alt="Screenshot of BUSE Dinning management system" class="w-full h-48 object-cover object-center border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">BUSE Dinning Management System</h3>
+                            <p class="text-gray-600 mb-4 text-sm">A web application for BUSE students to order meals online, integrated with a catering team dashboard for meal uploads and menu management.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">HTML5/CSS3</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">JAVASCRIPT</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">Front-End</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
 
-                    </div>
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/ATCS.jpg" alt="Screenshot of Automated Tobacco Curing System" class="w-full h-48 object-cover object-center border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">IoT: Automated Tobacco Curing System</h3>
+                            <p class="text-gray-600 mb-4 text-sm">An embedded system utilizing temperature/humidity sensors, heaters, and an Android APK for automated control over tobacco curing barn conditions.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Android Studio</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">IoT</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/BMI.jpg" alt="Screenshot of BMI Calculator" class="w-full h-48 object-cover object-center border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">IoT: BMI Calculator and Analyzer</h3>
+                            <p class="text-gray-600 mb-4 text-sm">Uses load cells and ultrasonic sensors (Arduino-controlled) to capture precise height/weight, transmitting data to an Android APK for BMI/body fat calculation.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Android Studio</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Sensors</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <img src="./assets/stocktake.png" alt="Screenshot of Stocktake Management System" class="w-full h-48 object-cover object-top border-b border-gray-100">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-accent-dark mb-2">Stocktake Management System</h3>
+                            <p class="text-gray-600 mb-4 text-sm">A complete stock management solution featuring a Point of Sale (POS) function and automated low-stock alerts to suppliers.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">VB.NET</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">POS</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
             </div>
         </section>
 
-        <section id="contact" class="contact section">
-            <div class="wrapper contact-content">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="contact-message">
-                    I'm currently open to new opportunities. Feel free to reach out to discuss a potential project, job offer, or just say hello!
+        <section id="contact" class="py-20 lg:py-30">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-accent-dark mb-8">Get In Touch</h2>
+                <p class="text-xl text-gray-700 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    I'm currently open to new opportunities, whether it's a full-time role, a freelance project, or a chance to collaborate on something interesting. Feel free to reach out!
                 </p>
-                <a href="mailto:your.email@example.com" class="button primary-button contact-email-btn">
-                    Say Hello
+                <a href="mailto:your.email@example.com" class="inline-block px-10 py-4 text-xl font-bold bg-primary-blue text-white rounded-lg shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-105 mb-12">
+                    <i class="fas fa-envelope mr-3"></i> Say Hello
                 </a>
-                <div class="social-links" aria-label="Connect with me on social media">
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                
+                <div class="flex justify-center space-x-8 text-3xl" aria-label="Connect with Chriswell on social media">
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                    <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile">
+                    <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </div>
@@ -218,14 +298,42 @@
 
     </main>
 
-    <footer class="site-footer alternate-bg">
-        <div class="wrapper">
-            <p>&copy; <span id="current-year">2025</span> Chriswell Peyara. Built with HTML5 & CSS3.</p>
+    <footer class="bg-accent-dark py-6 text-center">
+        <div class="max-w-6xl mx-auto px-4 text-sm text-gray-400">
+            <p>&copy; <span id="current-year">2025</span> Chriswell Peyara. Designed and Developed with $\text{Tailwind CSS}$.</p>
+            <p class="mt-1">Full-Stack Development | $\text{IoT}$ Systems | $\text{Java}$ | $\text{VB.NET}$</p>
         </div>
         <script>
             // Simple JavaScript to update the copyright year
             document.getElementById('current-year').textContent = new Date().getFullYear();
         </script>
     </footer>
+
+    <script>
+        const slides = document.querySelectorAll('.slide-image');
+        let currentSlide = 0;
+        const slideInterval = 10000; // 10 seconds
+
+        function nextSlide() {
+            // Hide the current slide
+            slides[currentSlide].classList.remove('active');
+            
+            // Move to the next slide
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Show the new current slide
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Start the slideshow
+        setInterval(nextSlide, slideInterval);
+
+        // Ensure the first slide is visible when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            if (slides.length > 0) {
+                slides[0].classList.add('active');
+            }
+        });
+    </script>
 </body>
 </html>
