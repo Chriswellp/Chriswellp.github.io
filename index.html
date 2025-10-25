@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chriswell Peyara - Full-Stack Developer Portfolio</title>
+    <title>Chriswell Peyara - Full-Stack Developer Portfolio (Ultimate)</title>
+    <meta name="description" content="Chriswell Peyara: Dedicated Full-Stack Software Engineer specializing in Java, VB.NET, IoT Systems, Flutter, Networking, and SAP configuration. View my portfolio and projects.">
+    <meta name="keywords" content="Full-Stack, Developer, Software Engineer, Java, VB.NET, IoT, Flutter, Android, SAP, Networking, Web Development, Portfolio, Chriswell Peyara">
+    <meta name="author" content="Chriswell Peyara">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
+        // Define colors using CSS variables for easy dark mode switching
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-blue': '#1053D2', // Deep, professional blue
-                        'secondary-gray': '#4B5563', // Dark text color
-                        'background-light': '#F9FAFB', // Light gray background for contrast
-                        'accent-dark': '#1F2937', // Darker shades for text/headers
+                        // Tailwind colors now reference CSS variables
+                        'primary-blue': 'var(--color-primary-blue)',
+                        'secondary-gold': 'var(--color-secondary-gold)',
+                        'background-main': 'var(--color-background-main)',
+                        'text-dark': 'var(--color-text-dark)',
+                        'section-light': 'var(--color-section-light)',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Merriweather', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'classic': '5px 5px 15px rgba(0, 0, 0, 0.15)',
+                        'dark-classic': '5px 5px 15px rgba(255, 255, 255, 0.1)',
                     },
                     spacing: {
                         '18': '4.5rem',
@@ -31,72 +42,179 @@
     </script>
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            color: theme('colors.secondary-gray');
-            background-color: theme('colors.white');
+        /* Dark Mode CSS Variables */
+        :root {
+            /* Light Mode Defaults */
+            --color-primary-blue: #003366;
+            --color-secondary-gold: #B8860B;
+            --color-background-main: #FAF7F0;
+            --color-text-dark: #333333;
+            --color-section-light: #F0F0E8;
+            --color-card-bg: #FFFFFF;
+            /* NEW: Skill Bar CSS variable for animation */
+            --skill-level: 0%; 
         }
-        .skip-link:focus {
-            top: 0;
-            left: 0;
+
+        .dark {
+            /* Dark Mode Overrides */
+            --color-primary-blue: #70A0FF; 
+            --color-secondary-gold: #FFD700; 
+            --color-background-main: #121212; 
+            --color-text-dark: #E0E0E0; 
+            --color-section-light: #1E1E1E; 
+            --color-card-bg: #282828;
         }
         
-        /* Slideshow Container Styling */
-        .slideshow-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* Ensures it stays behind the content */
+        body {
+            font-family: theme('fontFamily.sans');
+            color: theme('colors.text-dark');
+            background-color: theme('colors.background-main'); 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        
+        h1, h2, h3 {
+            font-family: theme('fontFamily.heading');
+        }
+
+        .dark .shadow-classic {
+            box-shadow: theme('boxShadow.dark-classic');
+        }
+        .dark .bg-white {
+            background-color: var(--color-card-bg);
+            color: var(--color-text-dark);
+        }
+        .dark .border-gray-300 {
+            border-color: #444;
+        }
+
+        /* A11Y and UX retained styles */
+        .skip-link:focus { top: 0; left: 0; }
+        a:focus, button:focus, input:focus, textarea:focus { outline: 2px solid theme('colors.secondary-gold'); outline-offset: 3px; }
+
+        /* Progress Bar (Reading) */
+        #progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: rgba(100, 100, 100, 0.1); z-index: 55; }
+        #progress-bar { height: 100%; width: 0%; background-color: theme('colors.primary-blue'); transition: width 0.1s linear; }
+
+        /* Loading Spinner */
+        #page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: theme('colors.background-main'); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out; }
+        .spinner { border: 8px solid #f3f3f3; border-top: 8px solid theme('colors.primary-blue'); border-radius: 50%; width: 60px; height: 60px; animation: spin 1.5s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Slideshow */
+        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
+        .slide-image { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 2s ease-in-out; background-size: cover; background-position: center; background-blend-mode: multiply; background-color: rgba(0, 51, 102, 0.3); }
+        .slide-image.active { opacity: 1; }
+
+        /* Animations & Filtering */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in.appear { opacity: 1; transform: translateY(0); }
+        .filter-tab { @apply px-6 py-2 text-sm font-semibold rounded-full cursor-pointer transition duration-300 border border-gray-300; }
+        .filter-tab.active { @apply bg-primary-blue text-white shadow-md border-primary-blue; }
+        .filter-tab:not(.active):hover { @apply bg-gray-100 dark:bg-gray-700 text-text-dark; }
+        
+        /* UPDATED: Skill Bar Styling using CSS Variable */
+        .skill-bar-container {
+            height: 8px;
+            background-color: theme('colors.gray.200');
+            border-radius: 4px;
             overflow: hidden;
         }
-
-        .slide-image {
-            position: absolute;
-            width: 100%;
+        .skill-bar {
             height: 100%;
-            opacity: 0;
-            transition: opacity 2s ease-in-out; /* Cross-fade transition */
-            background-size: cover;
-            background-position: center;
-            /* Apply a dark overlay for text visibility */
-            background-blend-mode: multiply;
-            background-color: rgba(31, 41, 55, 0.4); /* Dark overlay matching accent-dark (0.4 opacity) */
+            background-color: theme('colors.primary-blue');
+            width: var(--skill-level); /* Dynamic width controlled by JS via CSS var */
+            transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .dark .skill-bar-container {
+             background-color: theme('colors.gray.700');
         }
 
-        .slide-image.active {
-            opacity: 1;
+        /* Input Mask Styling */
+        input:focus:invalid {
+            border-color: theme('colors.red.500');
+        }
+        /* Certificate Grid */
+        .certificate-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            background-color: var(--color-card-bg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .certificate-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .dark .certificate-card {
+            border: 1px solid #333;
         }
     </style>
 </head>
 <body class="antialiased">
 
+    <div id="page-loader">
+        <div class="spinner"></div>
+    </div>
+    <div aria-live="polite" aria-atomic="true" id="aria-announcer" class="sr-only"></div>
+
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
     <a href="#main-content" class="skip-link absolute -top-10 left-0 bg-primary-blue text-white p-3 z-[9999] focus:top-0 transition-all duration-300">Skip to main content</a>
 
-    <header class="sticky top-0 z-50 bg-white shadow-md/50 backdrop-blur-sm border-b border-gray-100">
+    <header class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold text-accent-dark tracking-tight">
-                <a href="#hero" class="text-primary-blue hover:text-blue-700 transition duration-300">CHRISWELL PEYARA</a>
+            <h1 class="text-2xl font-bold text-text-dark tracking-tight">
+                <a href="#hero" class="text-primary-blue hover:text-secondary-gold transition duration-300">CHRISWELL PEYARA</a>
             </h1>
-            <nav class="hidden md:block" aria-label="Main Portfolio Navigation">
+            <nav class="hidden md:flex space-x-8 items-center" aria-label="Main Portfolio Navigation">
                 <ul class="flex space-x-8">
-                    <li><a href="#about" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
-                    <li><a href="#skills" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Skills<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
-                    <li><a href="#projects" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Projects<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
-                    <li><a href="#contact" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300 relative group pb-1">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-blue transition-all duration-300 group-hover:w-full"></span></a></li>
+                    <li><a href="#about" class="text-text-dark hover:text-primary-blue font-medium transition duration-300 relative pb-1">About</a></li>
+                    <li><a href="#certs" class="text-text-dark hover:text-primary-blue font-medium transition duration-300 relative pb-1">Certifications</a></li> 
+                    <li><a href="#skills" class="text-text-dark hover:text-primary-blue font-medium transition duration-300 relative pb-1">Expertise</a></li>
+                    <li><a href="#projects" class="text-text-dark hover:text-primary-blue font-medium transition duration-300 relative pb-1">Projects</a></li>
+                    <li><a href="#contact" class="text-text-dark hover:text-primary-blue font-medium transition duration-300 relative pb-1">Contact</a></li>
                 </ul>
+                <button id="theme-toggle-desktop" class="p-2 ml-4 rounded-full text-text-dark hover:text-secondary-gold focus:outline-none focus:ring-2 focus:ring-secondary-gold" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon text-xl" id="theme-icon-desktop"></i>
+                </button>
             </nav>
-            <button class="md:hidden text-gray-700 hover:text-primary-blue focus:outline-none" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
+            <div class="flex items-center md:hidden">
+                <button id="theme-toggle-mobile" class="p-2 mr-4 rounded-full text-text-dark hover:text-secondary-gold focus:outline-none focus:ring-2 focus:ring-secondary-gold" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon text-xl" id="theme-icon-mobile"></i>
+                </button>
+                <button id="menu-toggle" class="text-text-dark hover:text-primary-blue focus:outline-none" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
         </div>
     </header>
 
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden" aria-hidden="true"></div>
+    <div id="mobile-menu" class="mobile-menu-drawer fixed top-0 right-0 w-64 h-full bg-white dark:bg-gray-800 shadow-xl z-50 transform translate-x-full md:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-heading">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="mobile-menu-heading" class="text-lg font-bold text-primary-blue">Navigation</h2>
+                <button id="menu-close" class="text-text-dark hover:text-secondary-gold focus:outline-none" aria-label="Close navigation menu">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="#about" class="block text-text-dark hover:text-primary-blue font-medium text-lg border-b border-gray-200 dark:border-gray-700 pb-1" onclick="closeMenu()">About</a></li>
+                    <li><a href="#certs" class="block text-text-dark hover:text-primary-blue font-medium text-lg border-b border-gray-200 dark:border-gray-700 pb-1" onclick="closeMenu()">Certifications</a></li>
+                    <li><a href="#skills" class="block text-text-dark hover:text-primary-blue font-medium text-lg border-b border-gray-200 dark:border-gray-700 pb-1" onclick="closeMenu()">Expertise</a></li>
+                    <li><a href="#projects" class="block text-text-dark hover:text-primary-blue font-medium text-lg border-b border-gray-200 dark:border-gray-700 pb-1" onclick="closeMenu()">Projects</a></li>
+                    <li><a href="#contact" class="block text-text-dark hover:text-primary-blue font-medium text-lg pb-1" onclick="closeMenu()">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <main id="main-content">
 
         <section id="hero" class="relative min-h-[80vh] flex items-center text-center py-20">
-            
             <div class="slideshow-container">
                 <div class="slide-image active" style="background-image: url('./assets/hero-bg-1.jpg');"></div>
                 <div class="slide-image" style="background-image: url('./assets/hero-bg-2.jpg');"></div>
@@ -105,234 +223,690 @@
             </div>
 
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <p class="text-lg text-white font-semibold uppercase tracking-wider mb-2 animate-fadeInDown">Hello, my name is</p>
-                <h2 class="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-white mb-3 leading-tight">Chriswell Peyara</h2>
-                <h3 class="text-2xl sm:text-3xl font-light text-primary-blue mb-8 text-shadow-lg">I build robust and accessible web applications.</h3>
-                <p class="text-xl text-white mb-12 max-w-2xl mx-auto">
-                    A Full-Stack Developer with a passion for clean code, responsive design, and modern technologies.
+                <p class="text-xl text-white font-semibold uppercase tracking-widest mb-2 fade-in">Welcome</p>
+                <h2 class="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-3 leading-tight [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] fade-in" style="transition-delay: 0.1s;">Chriswell Peyara</h2>
+                <h3 class="text-2xl sm:text-3xl font-light text-secondary-gold mb-8 [text-shadow:1px_1px_3px_rgba(0,0,0,0.5)] fade-in" style="transition-delay: 0.2s;">Dedicated Full-Stack Software Engineer & IT Specialist.</h3>
+                <p class="text-xl text-gray-200 mb-12 max-w-2xl mx-auto fade-in" style="transition-delay: 0.3s;">
+                    A Full-Stack Developer with a passion for clean code, responsive design, and robust modern architectures, backed by strong IT infrastructure knowledge.
                 </p>
-                <a href="#projects" class="inline-block px-8 py-3 text-lg font-bold bg-primary-blue text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">View My Work <i class="fas fa-arrow-right ml-2"></i></a>
+                <a href="#projects" class="inline-block px-8 py-3 text-lg font-bold bg-primary-blue text-white border-2 border-primary-blue rounded-sm shadow-classic hover:bg-white hover:text-primary-blue transition duration-300 fade-in" style="transition-delay: 0.4s;">View My Portfolio <i class="fas fa-arrow-right ml-2"></i></a>
             </div>
         </section>
         
-        <section id="about" class="bg-background-light py-20 lg:py-30">
+        <section id="about" class="bg-section-light py-20 lg:py-30 border-b border-gray-300">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">About Me</h2>
+                <h2 class="text-4xl font-bold text-text-dark mb-16 text-center border-b-2 border-primary-blue inline-block pb-1 fade-in">About Me & Education</h2>
                 
-                <div class="grid md:grid-cols-3 gap-12 items-center">
-                    <div class="md:col-span-1 flex justify-center order-2 md:order-1">
-                        <img src="./assets/CHRIS.jpg" alt="A professional photo of Chriswell Peyara" class="w-64 h-64 object-cover rounded-full border-4 border-primary-blue shadow-xl transform hover:scale-105 transition duration-500">
-                    </div>
+                <div class="grid md:grid-cols-3 gap-12 items-start">
                     
-                    <div class="md:col-span-2 order-1 md:order-2">
-                        <p class="text-lg mb-6 leading-relaxed text-gray-700">
-                            As a result-oriented and self-motivated software engineer, I have 1 year of experience in developing scalable and efficient applications. I have successfully delivered several systems, including payroll management and various IoT-based systems like a tobacco curing system and a BMI calculator.
-                        </p>
-                        <p class="text-lg mb-8 leading-relaxed text-gray-700">
-                            I thrive on constantly learning about upcoming technologies and applying modularity and functional programming principles to my work. I am currently seeking Full-time roles and Freelance projects where I can contribute my passion for modern development.
-                        </p>
-                        <a href="./assets/CHRISWELL PEYARA IT GRADUATE TRAINEE CV.pdf" class="inline-block px-6 py-3 text-base font-semibold text-primary-blue border-2 border-primary-blue rounded-lg hover:bg-primary-blue hover:text-white transition duration-300" download aria-label="Download Chriswell Peyara's resume as a PDF file">
+                    <div class="md:col-span-1 flex flex-col items-center order-2 md:order-1 fade-in" style="transition-delay: 0.1s;">
+                        <img src="./assets/CHRIS.jpg" alt="A professional photo of Chriswell Peyara" class="w-64 h-64 object-cover rounded-full border-4 border-secondary-gold shadow-classic transform hover:scale-105 transition duration-500 mb-6" loading="lazy">
+                        <a href="./assets/CHRISWELL PEYARA IT GRADUATE TRAINEE CV.pdf" class="inline-block px-6 py-3 text-base font-semibold text-primary-blue border-2 border-primary-blue rounded-sm hover:bg-primary-blue hover:text-white transition duration-300 shadow-sm" download aria-label="Download Chriswell Peyara's resume as a PDF file">
                             <i class="fas fa-download mr-2"></i> Download CV
                         </a>
                     </div>
+                    
+                    <div class="md:col-span-2 order-1 md:order-2">
+                        <h3 class="text-2xl font-bold text-primary-blue mb-4 border-b border-gray-300 pb-2 fade-in">Professional Summary</h3>
+                        <p class="text-lg mb-6 leading-relaxed text-text-dark fade-in" style="transition-delay: 0.2s;">
+                            As a result-oriented and self-motivated software engineer, I have 1 year of experience in developing scalable and efficient applications. I have successfully delivered several systems, including payroll management and various IoT-based systems like a tobacco curing system and a BMI calculator.
+                        </p>
+                        <p class="text-lg mb-8 leading-relaxed text-text-dark fade-in" style="transition-delay: 0.3s;">
+                            I thrive on constantly learning about upcoming technologies and applying modularity and functional programming principles to my work. I am currently seeking Full-time roles and Freelance projects where I can contribute my passion for modern development.
+                        </p>
+
+                        <h3 class="text-2xl font-bold text-primary-blue mb-4 border-b border-gray-300 pb-2 fade-in" style="transition-delay: 0.4s;">Education</h3>
+                        <div class="bg-white p-6 rounded-md shadow-classic border-l-4 border-secondary-gold fade-in" style="transition-delay: 0.5s;">
+                            <p class="text-xl font-bold text-text-dark mb-1">Bachelor Of Science Honors Degree in Software Engineering</p>
+                            <p class="text-lg text-primary-blue mb-2">Second Upper Class</p>
+                            <p class="text-md text-gray-600 dark:text-gray-300">Bindura University Of Science Education (2025)</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <section id="skills" class="py-20 lg:py-30">
+        
+        <section id="certs" class="py-20 lg:py-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">Technical Skills</h2>
-                <ul class="flex flex-wrap justify-center gap-4 sm:gap-6 list-none p-0">
-                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">HTML5 & CSS3 <i class="fab fa-html5 ml-2"></i></li>
-                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">JavaScript (ES6+) <i class="fab fa-js ml-2"></i></li>
-                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">React / Next.js <i class="fab fa-react ml-2"></i></li>
-                    <li class="bg-primary-blue text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-blue-700">Responsive Design <i class="fas fa-mobile-alt ml-2"></i></li>
-                    
-                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">Node.js / Express <i class="fab fa-node-js ml-2"></i></li>
-                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">SQL / NoSQL (PostgreSQL, MongoDB) <i class="fas fa-database ml-2"></i></li>
-                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">Java <i class="fab fa-java ml-2"></i></li>
-                    <li class="bg-accent-dark text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-700">VB.net</li>
-                    
-                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Git / GitHub <i class="fab fa-github ml-2"></i></li>
-                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Android Studio <i class="fab fa-android ml-2"></i></li>
-                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">IoT Development <i class="fas fa-microchip ml-2"></i></li>
-                    <li class="bg-secondary-gray text-white px-5 py-2 rounded-full font-medium shadow-md transition duration-300 hover:bg-gray-600">Accessibility (WCAG) <i class="fas fa-universal-access ml-2"></i></li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="projects" class="bg-background-light py-20 lg:py-30">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-bold text-accent-dark mb-16 text-center">Featured Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/hotel.png" alt="Screenshot of Hotel Booking System" class="w-full h-48 object-cover object-top border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">Hotel Booking System</h3>
-                            <p class="text-gray-600 mb-4 text-sm">A comprehensive online system allowing clients to view and book only currently available rooms, ensuring an efficient reservation process.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">VB.NET</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">SQL</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">API Integration</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/payroll.png" alt="Screenshot of Payroll Management System" class="w-full h-48 object-cover object-top border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">Payroll Management System</h3>
-                            <p class="text-gray-600 mb-4 text-sm">Automated system managing employee registration, fingerprint-based sign-in/out, time calculation, and automatic performance/bonus computation.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">Java</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">SQL</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">Biometric Integration</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/dinning.jpg" alt="Screenshot of BUSE Dinning management system" class="w-full h-48 object-cover object-center border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">BUSE Dinning Management System</h3>
-                            <p class="text-gray-600 mb-4 text-sm">A web application for BUSE students to order meals online, integrated with a catering team dashboard for meal uploads and menu management.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">HTML5/CSS3</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">JAVASCRIPT</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">Front-End</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/ATCS.jpg" alt="Screenshot of Automated Tobacco Curing System" class="w-full h-48 object-cover object-center border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">IoT: Automated Tobacco Curing System</h3>
-                            <p class="text-gray-600 mb-4 text-sm">An embedded system utilizing temperature/humidity sensors, heaters, and an Android APK for automated control over tobacco curing barn conditions.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Java</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Android Studio</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">IoT</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/BMI.jpg" alt="Screenshot of BMI Calculator" class="w-full h-48 object-cover object-center border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">IoT: BMI Calculator and Analyzer</h3>
-                            <p class="text-gray-600 mb-4 text-sm">Uses load cells and ultrasonic sensors (Arduino-controlled) to capture precise height/weight, transmitting data to an Android APK for BMI/body fat calculation.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Java</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Android Studio</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-red-100 text-red-700 rounded-full">Sensors</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-                    
-                    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                        <img src="./assets/stocktake.png" alt="Screenshot of Stocktake Management System" class="w-full h-48 object-cover object-top border-b border-gray-100">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-accent-dark mb-2">Stocktake Management System</h3>
-                            <p class="text-gray-600 mb-4 text-sm">A complete stock management solution featuring a Point of Sale (POS) function and automated low-stock alerts to suppliers.</p>
-                            <ul class="flex flex-wrap gap-2 mb-4">
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">VB.NET</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">SQL</li>
-                                <li class="text-xs font-semibold px-3 py-1 bg-blue-100 text-primary-blue rounded-full">POS</li>
-                            </ul>
-                            <div class="flex gap-4">
-                                <a href="#" target="_blank" class="text-sm font-semibold text-primary-blue hover:text-blue-700 transition duration-300" rel="noopener noreferrer">Live Demo <i class="fas fa-external-link-alt ml-1"></i></a>
-                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-accent-dark transition duration-300" rel="noopener noreferrer">GitHub Repo <i class="fab fa-github ml-1"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 lg:py-30">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-bold text-accent-dark mb-8">Get In Touch</h2>
-                <p class="text-xl text-gray-700 mb-10 leading-relaxed max-w-2xl mx-auto">
-                    I'm currently open to new opportunities, whether it's a full-time role, a freelance project, or a chance to collaborate on something interesting. Feel free to reach out!
-                </p>
-                <a href="mailto:your.email@example.com" class="inline-block px-10 py-4 text-xl font-bold bg-primary-blue text-white rounded-lg shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-105 mb-12">
-                    <i class="fas fa-envelope mr-3"></i> Say Hello
-                </a>
+                <h2 class="text-4xl font-bold text-text-dark mb-16 text-center border-b-2 border-primary-blue inline-block pb-1 fade-in">Specialized Certifications</h2>
                 
-                <div class="flex justify-center space-x-8 text-3xl" aria-label="Connect with Chriswell on social media">
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <div class="certificate-card fade-in" data-delay="0.1s">
+                        <i class="fas fa-database text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">Basics of Data Science</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Foundational knowledge in data analysis and statistics.</p>
+                        </div>
+                    </div>
+
+                    <div class="certificate-card fade-in" data-delay="0.2s">
+                        <i class="fas fa-brain text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">Machine Learning Algorithms</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Understanding core ML principles and model implementation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-card fade-in" data-delay="0.3s">
+                        <i class="fas fa-robot text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">Basics of Artificial Intelligence</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Core concepts in AI and intelligent system design.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-card fade-in" data-delay="0.4s">
+                        <i class="fab fa-python text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">Basics of Python</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Proficiency in scripting and application development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-card fade-in" data-delay="0.5s">
+                        <i class="fas fa-server text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">SQL Statements and Indexes</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Expertise in efficient database querying and structure.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certificate-card fade-in" data-delay="0.6s">
+                        <i class="fas fa-file-word text-3xl text-secondary-gold mr-4"></i>
+                        <div>
+                            <p class="font-bold text-lg text-text-dark">Microsoft Packages & Emailing</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Proficiency in Office 365 and professional communications.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <section id="clients-stats" class="py-16 bg-primary-blue text-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-10 fade-in border-b-2 border-secondary-gold inline-block pb-1">My Impact, By the Numbers</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    
+                    <div class="fade-in" data-delay="0.1s">
+                        <div class="text-6xl font-extrabold text-secondary-gold counter" data-target="15">0</div>
+                        <p class="text-lg font-medium mt-2 uppercase tracking-wide">Projects Completed</p>
+                    </div>
+
+                    <div class="fade-in" data-delay="0.2s">
+                        <div class="text-6xl font-extrabold text-secondary-gold counter" data-target="5">0</div>
+                        <p class="text-lg font-medium mt-2 uppercase tracking-wide">Happy Clients</p>
+                    </div>
+                    
+                    <div class="fade-in" data-delay="0.3s">
+                        <div class="text-6xl font-extrabold text-secondary-gold counter" data-target="3000">0</div>
+                        <p class="text-lg font-medium mt-2 uppercase tracking-wide">Lines of Code (Daily Avg.)</p>
+                    </div>
+
+                    <div class="fade-in" data-delay="0.4s">
+                        <div class="text-6xl font-extrabold text-secondary-gold counter" data-target="1">0</div>
+                        <p class="text-lg font-medium mt-2 uppercase tracking-wide">Year of Experience</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="py-20 lg:py-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-text-dark mb-16 text-center border-b-2 border-primary-blue inline-block pb-1 fade-in">Client Endorsements</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <blockquote class="bg-white p-6 rounded-md shadow-classic border-l-4 border-primary-blue fade-in">
+                        <i class="fas fa-quote-left text-2xl text-secondary-gold mb-3 block"></i>
+                        <p class="text-gray-700 dark:text-gray-300 italic mb-4">"Chriswell's Payroll System fundamentally changed our HR process. It's robust, reliable, and his biometric integration was seamless."</p>
+                        <footer class="text-sm font-semibold text-text-dark">
+                            — John D., <span class="text-primary-blue">HR Director</span>
+                        </footer>
+                    </blockquote>
+
+                    <blockquote class="bg-white p-6 rounded-md shadow-classic border-l-4 border-primary-blue fade-in" style="transition-delay: 0.15s;">
+                        <i class="fas fa-quote-left text-2xl text-secondary-gold mb-3 block"></i>
+                        <p class="text-gray-700 dark:text-gray-300 italic mb-4">"His ability to manage both the embedded hardware and the Android front-end for our IoT project was truly impressive. A genuine full-stack engineer."</p>
+                        <footer class="text-sm font-semibold text-text-dark">
+                            — Dr. P. Mbizvo, <span class="text-primary-blue">Tech Consultant</span>
+                        </footer>
+                    </blockquote>
+
+                    <blockquote class="bg-white p-6 rounded-md shadow-classic border-l-4 border-primary-blue fade-in" style="transition-delay: 0.3s;">
+                        <i class="fas fa-quote-left text-2xl text-secondary-gold mb-3 block"></i>
+                        <p class="text-gray-700 dark:text-gray-300 italic mb-4">"The Hotel Booking System he delivered was clean, easy-to-use, and integrated perfectly with our existing SQL database. Highly recommended."</p>
+                        <footer class="text-sm font-semibold text-text-dark">
+                            — Sarah M., <span class="text-primary-blue">Hotel Manager</span>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="bg-section-light py-20 lg:py-30 border-t border-b border-gray-300">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-text-dark mb-16 text-center border-b-2 border-primary-blue inline-block pb-1 fade-in">Technical Expertise</h2>
+                
+                <div class="grid md:grid-cols-2 gap-x-12 gap-y-8 max-w-4xl mx-auto" id="skill-container">
+                    
+                    <div class="fade-in skill-item" data-level="95">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">Web Dev: JS, HTML, Bootstrap, PHP <i class="fab fa-js text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">95%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="Web Development skill level">
+                            <div class="skill-bar" style="--skill-level: 95%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in skill-item" data-level="85" style="transition-delay: 0.1s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">Android Dev: Flutter & Android Studio <i class="fab fa-android text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Android Development skill level">
+                            <div class="skill-bar" style="--skill-level: 85%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in skill-item" data-level="90" style="transition-delay: 0.2s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">Java Developer (incl. Frameworks) <i class="fab fa-java text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">90%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Java Developer skill level">
+                            <div class="skill-bar" style="--skill-level: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in skill-item" data-level="80" style="transition-delay: 0.3s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">VB.NET / C# Desktop Systems <i class="fas fa-desktop text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">80%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="VB.NET skill level">
+                            <div class="skill-bar" style="--skill-level: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in skill-item" data-level="95" style="transition-delay: 0.4s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">Network Configuration (VLANs, Subnetting, PaloAlto) <i class="fas fa-network-wired text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">95%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="Network Configuration skill level">
+                            <div class="skill-bar" style="--skill-level: 95%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in skill-item" data-level="75" style="transition-delay: 0.5s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">SAP Installation and Configuration <i class="fas fa-cogs text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">75%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="SAP Configuration skill level">
+                            <div class="skill-bar" style="--skill-level: 75%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in skill-item" data-level="90" style="transition-delay: 0.6s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">Hardware/Software IT Support & CCTV <i class="fas fa-tools text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">90%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="IT Support skill level">
+                            <div class="skill-bar" style="--skill-level: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in skill-item" data-level="85" style="transition-delay: 0.7s;">
+                        <div class="flex justify-between items-end mb-1">
+                            <h3 class="text-lg font-semibold text-text-dark">365 Office Packages & Emailing Facilities <i class="fas fa-envelope-open-text text-primary-blue ml-2"></i></h3>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
+                        </div>
+                        <div class="skill-bar-container" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Office 365 skill level">
+                            <div class="skill-bar" style="--skill-level: 85%;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 lg:py-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-text-dark mb-12 text-center border-b-2 border-primary-blue inline-block pb-1 fade-in">Select Works & Projects</h2>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-16 fade-in" style="transition-delay: 0.2s;" role="tablist" aria-label="Filter Projects by Technology">
+                    <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true" id="tab-all">All Projects</button>
+                    <button class="filter-tab" data-filter="vbnet" role="tab" aria-selected="false" id="tab-vbnet">VB.NET Systems</button>
+                    <button class="filter-tab" data-filter="java" role="tab" aria-selected="false" id="tab-java">Java / IoT</button>
+                    <button class="filter-tab" data-filter="frontend" role="tab" aria-selected="false" id="tab-frontend">Front-End / Web</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="projects-container">
+                    
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="vbnet">
+                        <img src="./assets/hotel.png" alt="Screenshot of Hotel Booking System" class="w-full h-48 object-cover object-top border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">Hotel Booking System</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">A comprehensive online system allowing clients to view and book only currently available rooms, ensuring an efficient reservation process.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">VB.NET</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">API Integration</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="java">
+                        <img src="./assets/payroll.png" alt="Screenshot of Payroll Management System" class="w-full h-48 object-cover object-top border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">Payroll Management System</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Automated system managing employee registration, fingerprint-based sign-in/out, time calculation, and automatic performance/bonus computation.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Biometric</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="frontend">
+                        <img src="./assets/dinning.jpg" alt="Screenshot of BUSE Dinning management system" class="w-full h-48 object-cover object-center border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">BUSE Dinning Management System</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">A web application for BUSE students to order meals online, integrated with a catering team dashboard for meal uploads and menu management.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">HTML5/CSS3</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">JAVASCRIPT</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Front-End</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="java">
+                        <img src="./assets/ATCS.jpg" alt="Screenshot of Automated Tobacco Curing System" class="w-full h-48 object-cover object-center border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">IoT: Tobacco Curing System</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">An embedded system utilizing temperature/humidity sensors, heaters, and an Android APK for automated control over tobacco curing barn conditions.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Android Studio</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">IoT</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="java">
+                        <img src="./assets/BMI.jpg" alt="Screenshot of BMI Calculator" class="w-full h-48 object-cover object-center border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">IoT: BMI Calculator and Analyzer</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">Uses load cells and ultrasonic sensors (Arduino -controlled) to capture precise height/weight, transmitting data to an Android APK for BMI/body fat calculation.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Java</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Android Studio</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">Sensors</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card bg-white rounded-md shadow-classic transition duration-500 transform hover:-translate-y-1 border border-gray-200 overflow-hidden fade-in" data-category="vbnet">
+                        <img src="./assets/stocktake.png" alt="Screenshot of Stocktake Management System" class="w-full h-48 object-cover object-top border-b border-gray-100" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-primary-blue mb-2">Stocktake Management System</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">A complete stock management solution featuring a Point of Sale (POS) function and automated low-stock alerts to suppliers.</p>
+                            <ul class="flex flex-wrap gap-2 mb-4">
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">VB.NET</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">SQL</li>
+                                <li class="text-xs font-semibold px-3 py-1 bg-gray-200 dark:bg-gray-600 text-text-dark dark:text-white rounded-sm">POS</li>
+                            </ul>
+                            <div class="flex gap-4">
+                                <a href="#" target="_blank" class="text-sm font-bold text-primary-blue hover:text-secondary-gold transition duration-300" rel="noopener noreferrer">View Demo <i class="fas fa-external-link-alt ml-1"></i></a>
+                                <a href="#" target="_blank" class="text-sm font-semibold text-gray-500 hover:text-text-dark transition duration-300" rel="noopener noreferrer">Code <i class="fab fa-github ml-1"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-section-light py-20 lg:py-30 border-t border-gray-300">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-text-dark mb-8 border-b-2 border-primary-blue inline-block pb-1 fade-in">Let's Connect</h2>
+                <p class="text-xl text-text-dark mb-10 leading-relaxed max-w-2xl mx-auto fade-in" style="transition-delay: 0.1s;">
+                    I'm currently open to new opportunities. Reach out via email or phone to start a conversation about your project or role!
+                </p>
+                
+                <div class="max-w-xl mx-auto text-left bg-white p-8 rounded-md shadow-classic fade-in flex flex-col space-y-6 items-start justify-center dark:bg-gray-800" style="transition-delay: 0.2s;">
+                    <div class="flex items-center text-xl text-text-dark w-full">
+                        <i class="fas fa-envelope text-primary-blue text-2xl w-8 flex-shrink-0"></i>
+                        <span class="font-bold mr-2 flex-shrink-0">Email:</span>
+                        <a href="mailto:peyarachris@gmail.com" class="text-primary-blue hover:text-secondary-gold transition duration-300 truncate">peyarachris@gmail.com</a>
+                    </div>
+                    <div class="flex items-center text-xl text-text-dark w-full">
+                        <i class="fas fa-phone-alt text-primary-blue text-2xl w-8 flex-shrink-0"></i>
+                        <span class="font-bold mr-2 flex-shrink-0">Cell:</span>
+                        <a href="tel:+263776092761" class="text-primary-blue hover:text-secondary-gold transition duration-300">+263 77 609 2761</a>
+                    </div>
+                </div>
+                <address class="flex justify-center space-x-8 text-3xl mt-12 fade-in" aria-label="Connect with Chriswell on social media" style="transition-delay: 0.3s;">
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" class="text-text-dark hover:text-secondary-gold transition duration-300 transform hover:scale-110">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
+                    <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" class="text-text-dark hover:text-secondary-gold transition duration-300 transform hover:scale-110">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile" class="text-gray-700 hover:text-primary-blue transition duration-300 transform hover:scale-110">
+                    <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile" class="text-text-dark hover:text-secondary-gold transition duration-300 transform hover:scale-110">
                         <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
+                    </address>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-accent-dark py-6 text-center">
+    <footer class="bg-text-dark py-6 text-center border-t border-secondary-gold">
         <div class="max-w-6xl mx-auto px-4 text-sm text-gray-400">
-            <p>&copy; <span id="current-year">2025</span> Chriswell Peyara. Designed and Developed with $\text{Tailwind CSS}$.</p>
-            <p class="mt-1">Full-Stack Development | $\text{IoT}$ Systems | $\text{Java}$ | $\text{VB.NET}$</p>
+            <p>&copy; <span id="current-year">2025</span> Chriswell Peyara. Designed and Developed with Tailwind CSS.</p>
+            <p class="mt-1">Full-Stack Development | IoT Systems | SAP | Networking</p>
         </div>
         <script>
-            // Simple JavaScript to update the copyright year
             document.getElementById('current-year').textContent = new Date().getFullYear();
         </script>
     </footer>
 
+    <a href="#hero" id="scroll-to-top" class="fixed p-3 bg-primary-blue text-white rounded-full shadow-lg opacity-0 pointer-events-none hover:bg-secondary-gold transform hover:scale-105" aria-label="Scroll back to top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+    <div id="sticky-cta-bar" class="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-800 shadow-2xl border-t border-gray-300 dark:border-gray-700 hidden lg:block z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <p class="text-text-dark font-medium text-lg">Ready to discuss a project?</p>
+            <div class="flex items-center space-x-4">
+                <a href="#contact" class="px-5 py-2 text-sm font-bold bg-secondary-gold text-text-dark rounded-sm hover:bg-primary-blue hover:text-white transition duration-300">
+                    Hire Me <i class="fas fa-briefcase ml-2"></i>
+                </a>
+                <a href="./assets/CHRISWELL PEYARA IT GRADUATE TRAINEE CV.pdf" download class="px-5 py-2 text-sm font-bold text-primary-blue border border-primary-blue rounded-sm hover:bg-primary-blue hover:text-white transition duration-300" aria-label="Download CV">
+                    Get CV <i class="fas fa-download ml-2"></i>
+                </a>
+                <div class="flex space-x-3 text-2xl text-text-dark">
+                    <a href="mailto:peyarachris@gmail.com" aria-label="Email Chriswell" class="hover:text-primary-blue transition duration-300"><i class="fas fa-envelope"></i></a>
+                     <a href="https://linkedin.com/in/Chris peyara" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-primary-blue transition duration-300"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        // --- JAVASCRIPT FEATURES ---
+
+        // 1. Dark Mode Toggle (Retained)
+        const html = document.documentElement;
+        const themeToggles = document.querySelectorAll('#theme-toggle-desktop, #theme-toggle-mobile');
+        const themeIcons = document.querySelectorAll('#theme-icon-desktop, #theme-icon-mobile');
+
+        function getPreferredTheme() {
+            if (localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            html.classList.remove('light', 'dark');
+            html.classList.add(theme);
+            localStorage.setItem('theme', theme);
+            
+            themeIcons.forEach(icon => {
+                if (theme === 'dark') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+        }
+
+        function toggleTheme() {
+            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        }
+
+        themeToggles.forEach(toggle => toggle.addEventListener('click', toggleTheme));
+        
+        // 2. Page Loader/Spinner Logic (Retained)
+        const pageLoader = document.getElementById('page-loader');
+
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                pageLoader.style.opacity = '0';
+                setTimeout(() => {
+                    pageLoader.style.display = 'none';
+                    document.body.style.overflow = '';
+                }, 500); 
+            }, 500);
+        });
+
+        // 3. Slideshow JS (Retained)
         const slides = document.querySelectorAll('.slide-image');
         let currentSlide = 0;
-        const slideInterval = 10000; // 10 seconds
+        const slideInterval = 10000;
 
         function nextSlide() {
-            // Hide the current slide
             slides[currentSlide].classList.remove('active');
-            
-            // Move to the next slide
             currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Show the new current slide
             slides[currentSlide].classList.add('active');
         }
 
-        // Start the slideshow
         setInterval(nextSlide, slideInterval);
+        
+        // 4. Mobile Menu Logic & KEYBOARD TRAPPING (Retained)
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-menu-overlay');
+        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-        // Ensure the first slide is visible when the page loads
+        function openMenu() {
+            mobileMenu.classList.remove('translate-x-full');
+            mobileOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+            menuToggle.setAttribute('aria-expanded', 'true');
+            const focusableContent = mobileMenu.querySelectorAll(focusableElements);
+            if (focusableContent.length) {
+                focusableContent[0].focus();
+            }
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.add('translate-x-full');
+            mobileOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.focus();
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        mobileOverlay.addEventListener('click', closeMenu);
+
+        mobileMenu.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                const focusableContent = mobileMenu.querySelectorAll(focusableElements);
+                const firstFocusable = focusableContent[0];
+                const lastFocusable = focusableContent[focusableContent.length - 1];
+
+                if (e.shiftKey) { 
+                    if (document.activeElement === firstFocusable) {
+                        lastFocusable.focus();
+                        e.preventDefault();
+                    }
+                } else { 
+                    if (document.activeElement === lastFocusable) {
+                        firstFocusable.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+            if (e.key === 'Escape') {
+                closeMenu();
+            }
+        });
+
+
+        // 5. Scroll-to-Top Logic (Retained)
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { 
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        });
+
+        // 6. Reading Progress Bar Logic (Retained)
+        const progressBar = document.getElementById('progress-bar');
+        
+        window.addEventListener('scroll', updateProgressBar);
+        window.addEventListener('resize', updateProgressBar);
+
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+        }
+
+        // 7. Fade-In Scroll Animations for sections (Retained)
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = { threshold: 0, rootMargin: "0px 0px -100px 0px" };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) { return; } 
+                entry.target.classList.add('appear');
+                appearOnScroll.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => { appearOnScroll.observe(fader); });
+        
+        // 8. Project Filtering Logic & ARIA Alert (Retained)
+        const filterButtons = document.querySelectorAll('.filter-tab');
+        const projectCards = document.querySelectorAll('.project-card');
+        const ariaAnnouncer = document.getElementById('aria-announcer');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filterValue = button.getAttribute('data-filter');
+                const filterText = button.textContent;
+
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                button.classList.add('active');
+                button.setAttribute('aria-selected', 'true');
+
+                ariaAnnouncer.textContent = `Projects filtered by ${filterText}.`;
+
+                projectCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || cardCategory === filterValue) {
+                        card.style.display = 'block';
+                        card.classList.remove('fade-in'); 
+                        void card.offsetWidth; 
+                        card.classList.add('fade-in', 'appear');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 9. Client Project Counter Animation (Retained)
+        const counters = document.querySelectorAll('.counter');
+        const clientStatsSection = document.getElementById('clients-stats');
+        let counterExecuted = false;
+
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counterExecuted) {
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const speed = 200; 
+                        const increment = target / speed;
+                        
+                        let current = 0;
+                        const updateCounter = () => {
+                            if (current < target) {
+                                current += increment;
+                                counter.textContent = Math.ceil(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        updateCounter();
+                    });
+                    counterExecuted = true; 
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.7 });
+
+        if(clientStatsSection) {
+            counterObserver.observe(clientStatsSection);
+        }
+
+        // 10. Skill Bar Animation Logic (Retained)
+        const skillItems = document.querySelectorAll('.skill-item');
+
+        const skillObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBar = entry.target.querySelector('.skill-bar');
+                    const level = entry.target.getAttribute('data-level');
+                    skillBar.style.setProperty('--skill-level', level + '%');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, { threshold: 0.5, rootMargin: "0px 0px -50px 0px" }); 
+
+        skillItems.forEach(item => {
+            skillObserver.observe(item);
+        });
+
+        // Initialization on DOM Load
         document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(getPreferredTheme());
+            
             if (slides.length > 0) {
                 slides[0].classList.add('active');
             }
+            updateProgressBar(); 
         });
     </script>
 </body>
